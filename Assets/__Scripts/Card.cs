@@ -40,16 +40,15 @@ public class Card : MonoBehaviour {
 
 [System.Serializable]
 public class Decorator{
-	public string	type;			// For card pips, tyhpe = "pip"
+	public string	type;			// For card pips, type = "pip"
 	public Vector3	loc;			// location of sprite on the card
-	public bool		flip = false;	//whether to flip vertically
-	public float 	scale = 1.0f;
+	public bool		flip = false;	//whether to flip the Sprite vertically
+	public float 	scale = 1.0f;   // the scale of the sprite
 }
 
 [System.Serializable]
 public class CardDefinition{
 	public string	face;	//sprite to use for face cart
 	public int		rank;	// value from 1-13 (Ace-King)
-	public List<Decorator>	
-					pips = new List<Decorator>();  // Pips Used
+	public List<Decorator>	pips = new List<Decorator>();  // Pips Used
 }

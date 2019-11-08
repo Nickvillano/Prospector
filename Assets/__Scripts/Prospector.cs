@@ -17,12 +17,19 @@ public class Prospector : MonoBehaviour {
 	public Deck					deck;
 
 	void Awake(){
-		S = this;
+		S = this; //Set up the Singleton for Prospector
 	}
 
 	void Start() {
 		deck = GetComponent<Deck> ();
 		deck.InitDeck (deckXML.text);
+        Deck.Shuffle(ref deck.cards); // This shuffles a deck
+        Card c;
+        for(int cNum = 0; cNum < deck.cards.count; cNum++)
+        {
+            c = deck.cards[cNum];
+            c.transform.localPosition = new Vector3((cNum % 13) * 3, cNum/13 * 4, 0);
+        }
 	}
 
 }
