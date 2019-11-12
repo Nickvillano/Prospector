@@ -5,7 +5,7 @@ using UnityEngine;
 //The SlotDef class is not a subclass of MonoBehaviour, so it does
 // a separate C# file.
 
-[System.Serializable] // This makes SlotDefs visible in the Unity In
+[System.Serializable] // This makes SlotDefs visible in the Unity in the Inspector Pane
 public class SlotDef
 {
     public float            x;
@@ -22,15 +22,16 @@ public class SlotDef
 
 public class Layout : MonoBehaviour
 {
-    public PT_XMLReader xmlr;
-    public PT_XMLHashtable xml;
-    public Vector2 multiplier;
-    public List<SlotDef> slotDefs;
+    public PT_XMLReader xmlr; // Just like Deck, this has a PT_XMLReader
+    public PT_XMLHashtable xml; // This variable is for faster xml access
+    public Vector2 multiplier; // The offset of the tableau's center
+    //slotDef references
+    public List<SlotDef> slotDefs; //All the slotDefs from Row0-Row3
 
     public SlotDef drawPile;
     public SlotDef discardPile;
 
-    //This holds all of the possible names for the layers set by 1
+    //This holds all of the possible names for the layers set by layerID
     public string[] sortingLayerNames = new string[] { "Row", "Row2", "Row3", "Discard", "Draw" };
 
     //This function is called to read in the LayoutXML.xml file
@@ -72,13 +73,13 @@ public class Layout : MonoBehaviour
 
             switch (tSD.type)
             {
-                // pull additional attributes based on the type of this
+                // pull additional attributes based on the type of this <slot>
                 case "slot":
                     tSD.faceUp = (slotsX[i].att("faceup") == "1");
                     tSD.id = int.Parse(slotsX[i].att("id"));
                     if (slotsX[i].HasAtt("hiddenby"))
                     {
-                        string[] hiding = slotsX[i].att("hiddenby").Split();
+                        string[] hiding = slotsX[i].att("hiddenby").Split(',');
                         foreach (string s in hiding)
                         {
                             tSD.hiddenBy.Add(int.Parse(s));
